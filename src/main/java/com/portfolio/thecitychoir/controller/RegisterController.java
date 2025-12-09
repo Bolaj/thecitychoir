@@ -4,6 +4,7 @@ import com.portfolio.thecitychoir.dto.AuthDTO;
 import com.portfolio.thecitychoir.dto.RegistrationRequestDto;
 import com.portfolio.thecitychoir.service.ProfileService;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class RegisterController {
     private final ProfileService profileService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegistrationRequestDto dto) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequestDto dto) throws MessagingException, UnsupportedEncodingException {
         return ResponseEntity.ok(profileService.register(dto));
     }
     @GetMapping("/activate")
