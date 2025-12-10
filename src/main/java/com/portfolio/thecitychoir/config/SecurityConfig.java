@@ -40,7 +40,7 @@ public class SecurityConfig {
                         "/auth/register",
                         "/auth/activate",
                         "/auth/login",
-                        "/auth/mark-attendance"
+                        "/auth/attendance/mark"
 
                 ).permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
