@@ -1,5 +1,7 @@
 package com.portfolio.thecitychoir.exceptions;
 
+import com.portfolio.thecitychoir.dto.ApiErrorResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -7,47 +9,93 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Handle Email Already Registered
     @ExceptionHandler(EmailAlreadyRegisteredException.class)
-    public ResponseEntity<?> handleEmailAlreadyRegistered(EmailAlreadyRegisteredException ex) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(Map.of(
-                        "error", "Conflict",
-                        "message", ex.getMessage()
-                ));
+    public ResponseEntity<ApiErrorResponse> handleEmailExists(
+            EmailAlreadyRegisteredException ex,
+            HttpServletRequest request
+    ) {
+        return buildError(ex.getMessage(), HttpStatus.CONFLICT, request);
     }
 
-    // Handle Validation Errors
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidationErrors(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
+    public ResponseEntity<ApiErrorResponse> handleValidationErrors(
+            MethodArgumentNotValidException ex,
+            HttpServletRequest request
+    ) {
+        Map<String, String> details = new HashMap<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-            errors.put(error.getField(), error.getDefaultMessage());
+            details.put(error.getField(), error.getDefaultMessage());
         }
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(Map.of(
-                        "error", "Bad Request",
-                        "message", "Validation failed",
-                        "details", errors
-                ));
+
+        return buildError(
+                "Validation failed",
+                HttpStatus.BAD_REQUEST,
+                request,
+                details.toString()
+        );
     }
 
-    // Handle all other exceptions
+    @ExceptionHandler(InvalidJwtException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidJwt(
+            InvalidJwtException ex,
+            HttpServletRequest request
+    ) {
+        return buildError(ex.getMessage(), HttpStatus.UNAUTHORIZED, request);
+    }
+
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<ApiErrorResponse> handleAccessDenied(
+            Exception ex,
+            HttpServletRequest request
+    ) {
+        return buildError(
+                "You do not have permission to perform this action",
+                HttpStatus.FORBIDDEN,
+                request
+        );
+    }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleOtherExceptions(Exception ex) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of(
-                        "error", "Internal Server Error",
-                        "message", ex.getMessage()
-                ));
+    public ResponseEntity<ApiErrorResponse> handleOtherExceptions(
+            Exception ex,
+            HttpServletRequest request
+    ) {
+        return buildError(
+                "An unexpected error occurred",
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                request
+        );
+    }
+
+    private ResponseEntity<ApiErrorResponse> buildError(
+            String message,
+            HttpStatus status,
+            HttpServletRequest request
+    ) {
+        return buildError(message, status, request, null);
+    }
+
+    private ResponseEntity<ApiErrorResponse> buildError(
+            String message,
+            HttpStatus status,
+            HttpServletRequest request,
+            String details
+    ) {
+        ApiErrorResponse error = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .error(status.getReasonPhrase())
+                .message(details == null ? message : message + " | " + details)
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(status).body(error);
     }
 }
