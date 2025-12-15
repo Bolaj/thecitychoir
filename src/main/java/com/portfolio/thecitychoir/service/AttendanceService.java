@@ -2,10 +2,12 @@ package com.portfolio.thecitychoir.service;
 
 import com.portfolio.thecitychoir.dto.AttendanceRequestDto;
 import com.portfolio.thecitychoir.dto.AttendanceResponseDto;
+import com.portfolio.thecitychoir.dto.CreateRehearsalDto;
 import com.portfolio.thecitychoir.entity.AttendanceEntity;
 import com.portfolio.thecitychoir.entity.DeviceBindingEntity;
 import com.portfolio.thecitychoir.entity.ProfileEntity;
 import com.portfolio.thecitychoir.entity.RehearsalEntity;
+import com.portfolio.thecitychoir.exceptions.RehearsalAlreadyExistsException;
 import com.portfolio.thecitychoir.repository.AttendanceRepository;
 import com.portfolio.thecitychoir.repository.DeviceBindRepository;
 import com.portfolio.thecitychoir.repository.ProfileRepository;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -90,9 +93,30 @@ public class AttendanceService {
         return new AttendanceResponseDto(true, "Attendance Marked Successfully", user.getRegistrationNumber(), attendance.getCheckedAt());
     }
 
-    public RehearsalEntity createRehearsal(RehearsalEntity rehearsal) {
-        return rehearsalRepository.save(rehearsal);
+    @Transactional
+    public RehearsalEntity createRehearsal(CreateRehearsalDto dto) {
+
+        LocalDate date = dto.startTime().toLocalDate();
+
+        if (rehearsalRepository.existsByRehearsalDate(date)) {
+            throw new RehearsalAlreadyExistsException(
+                    "A rehearsal already exists for " + date
+            );
+        }
+
+        return rehearsalRepository.save(
+                RehearsalEntity.builder()
+                        .name(dto.name())
+                        .lat(dto.lat())
+                        .lng(dto.lng())
+                        .radiusMeters(dto.radiusMeters())
+                        .startTime(dto.startTime())
+                        .endTime(dto.endTime())
+                        .rehearsalDate(date)
+                        .build()
+        );
     }
+
 
     @Transactional
     public String rotateQrToken(Long rehearsalId, int validMinutes) {

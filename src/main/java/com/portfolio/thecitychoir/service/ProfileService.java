@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -30,6 +31,16 @@ public class ProfileService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
+
+    private static final List<String> VALID_ROLES = List.of(
+            "Member",
+            "Part Leader",
+            "Part Influencer",
+            "Director",
+            "Super Admin",
+            "Admin",
+            "Manager"
+    );
 
     private RegistrationRequestDto toDTO(ProfileEntity profileEntity) {
         return new RegistrationRequestDto(
@@ -97,12 +108,25 @@ public class ProfileService {
 
         return toResponseDTO(profile);
     }
+    public String getRoleByEmail(String email) {
+        return profileRepository.findByEmail(email)
+                .map(ProfileEntity::getRole)
+                .orElseThrow(() -> new RuntimeException("Profile not found for email: " + email));
+    }
+
     public Map<String, Object> authenticateAndGenerateToken(AuthDTO authDTO) {
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authDTO.getEmail(), authDTO.getPassword()));
-            String token = jwtUtil.generateToken(authDTO.getEmail());
+
+            String email = authDTO.getEmail();
+            String token = jwtUtil.generateToken(email);
+
+            // Fetch the role for the response
+            String userRole = getRoleByEmail(email);
+
             return Map.of("token", token,
-                    "user", getPublicProfile(authDTO.getEmail())
+                    "user", getPublicProfile(email),
+                    "role", userRole
             );
 
         } catch (RuntimeException e) {
@@ -120,6 +144,21 @@ public class ProfileService {
                 })
                 .orElse(false);
 
+    }
+    @Transactional
+    public ProfileEntity updateRole(String email, String newRole) {
+
+        if (!VALID_ROLES.contains(newRole)) {
+            throw new IllegalArgumentException("Invalid role specified: " + newRole +
+                    ". Must be one of: " + VALID_ROLES);
+        }
+
+        return profileRepository.findByEmail(email)
+                .map(profile -> {
+                    profile.setRole(newRole);
+                    return profileRepository.save(profile);
+                })
+                .orElseThrow(() -> new RuntimeException("Profile not found for email: " + email));
     }
     public boolean isProfileActive(String email) {
         return profileRepository.findByEmail(email)
