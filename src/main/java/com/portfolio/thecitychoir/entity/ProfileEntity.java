@@ -33,9 +33,11 @@ public class ProfileEntity {
 
     @Column(unique = true)
     private String registrationNumber;
+    private String role;
 
     private Boolean isActive;
     private String activationToken;
+
 
     @Column(updatable = false)
     @CreationTimestamp
@@ -48,6 +50,9 @@ public class ProfileEntity {
     public void prePersist() {
         if(this.isActive == null) {
             isActive = false;
+        }
+        if(this.role == null || this.role.isEmpty()) {
+            this.role = "Member";
         }
     }
 
