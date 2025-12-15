@@ -1,6 +1,7 @@
 package com.portfolio.thecitychoir.entity;
 
 
+import com.portfolio.thecitychoir.service.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +34,10 @@ public class ProfileEntity {
 
     @Column(unique = true)
     private String registrationNumber;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     private Boolean isActive;
     private String activationToken;
@@ -48,11 +52,11 @@ public class ProfileEntity {
 
     @PrePersist
     public void prePersist() {
-        if(this.isActive == null) {
+        if (this.isActive == null) {
             isActive = false;
         }
-        if(this.role == null || this.role.isEmpty()) {
-            this.role = "Member";
+        if (this.role == null) {
+            this.role = Role.MEMBER;
         }
     }
 
