@@ -3,8 +3,10 @@ package com.portfolio.thecitychoir.controller;
 import com.portfolio.thecitychoir.dto.AttendanceRequestDto;
 import com.portfolio.thecitychoir.dto.AttendanceResponseDto;
 import com.portfolio.thecitychoir.dto.CreateRehearsalDto;
+import com.portfolio.thecitychoir.entity.ProfileEntity;
 import com.portfolio.thecitychoir.entity.RehearsalEntity;
 import com.portfolio.thecitychoir.service.AttendanceService;
+import com.portfolio.thecitychoir.service.ProfileService;
 import com.portfolio.thecitychoir.util.JWTUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,9 @@ import java.util.Map;
 public class AttendanceController {
 
     private final AttendanceService attendanceService;
-    private final JWTUtil jwtUtil; // used to extract username/email from token
+    private final ProfileService profileService;
+    private final JWTUtil jwtUtil;
+
 
     @PostMapping("/mark")
     public ResponseEntity<?> markAttendance(
@@ -37,18 +41,23 @@ public class AttendanceController {
         return res.success() ? ResponseEntity.ok(res) : ResponseEntity.status(HttpStatus.FORBIDDEN).body(res);
     }
 
-    // Admin: create rehearsal
+    @PutMapping("/role/{email}")
+    @PreAuthorize("hasAuthority('Super Admin') or hasAuthority('Admin')")
+    public ResponseEntity<ProfileEntity> updateProfileRole(
+            @PathVariable String email,
+            @RequestParam String newRole) {
+
+        ProfileEntity updatedProfile = profileService.updateRole(email, newRole);
+
+        return ResponseEntity.ok(updatedProfile);
+    }
+
     @PostMapping("/rehearsal")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RehearsalEntity> createRehearsal(@Valid @RequestBody CreateRehearsalDto dto) {
-        RehearsalEntity r = new RehearsalEntity();
-        r.setName(dto.name());
-        r.setLat(dto.lat());
-        r.setLng(dto.lng());
-        r.setRadiusMeters(dto.radiusMeters());
-        r.setStartTime(dto.startTime());
-        r.setEndTime(dto.endTime());
-        return ResponseEntity.ok(attendanceService.createRehearsal(r));
+    public ResponseEntity<RehearsalEntity> createRehearsal(
+            @Valid @RequestBody CreateRehearsalDto dto
+    ) {
+        return ResponseEntity.ok(attendanceService.createRehearsal(dto));
     }
 
     // Admin: rotate QR (returns token; frontend can render as QR image)
