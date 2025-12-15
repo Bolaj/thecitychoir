@@ -3,6 +3,7 @@ package com.portfolio.thecitychoir.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record CreateRehearsalDto(
@@ -11,5 +12,6 @@ public record CreateRehearsalDto(
         @NotNull Double lng,
         @NotNull Integer radiusMeters,
         @NotNull LocalDateTime startTime,
-        @NotNull LocalDateTime endTime
+        @NotNull LocalDateTime endTime,
+        @NotNull LocalDate rehearsalDate
 ) {}
