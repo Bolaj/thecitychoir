@@ -1,6 +1,7 @@
 package com.portfolio.thecitychoir.util;
 
 
+import com.portfolio.thecitychoir.exceptions.InvalidJwtException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -45,8 +46,21 @@ public class JWTUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (io.jsonwebtoken.security.SignatureException e) {
+            throw new InvalidJwtException("Invalid JWT signature");
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            throw new InvalidJwtException("JWT token has expired");
+        } catch (io.jsonwebtoken.JwtException e) {
+            throw new InvalidJwtException("Invalid JWT token");
+        }
     }
+
 
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
