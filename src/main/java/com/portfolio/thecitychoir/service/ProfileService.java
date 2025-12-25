@@ -4,10 +4,13 @@ import com.portfolio.thecitychoir.dto.AuthDTO;
 import com.portfolio.thecitychoir.dto.RegistrationRequestDto;
 import com.portfolio.thecitychoir.dto.RegistrationResponseDto;
 import com.portfolio.thecitychoir.entity.ProfileEntity;
+import com.portfolio.thecitychoir.exceptions.EmailAlreadyRegisteredException;
 import com.portfolio.thecitychoir.repository.ProfileRepository;
+import com.portfolio.thecitychoir.role.Role;
 import com.portfolio.thecitychoir.util.JWTUtil;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,12 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor@Slf4j
+
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
@@ -32,15 +35,7 @@ public class ProfileService {
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
 
-    private static final List<String> VALID_ROLES = List.of(
-            "Member",
-            "Part Leader",
-            "Part Influencer",
-            "Director",
-            "Super Admin",
-            "Admin",
-            "Manager"
-    );
+
 
     private RegistrationRequestDto toDTO(ProfileEntity profileEntity) {
         return new RegistrationRequestDto(
@@ -87,11 +82,10 @@ public class ProfileService {
     }
 
     @Transactional
-    public RegistrationResponseDto register(RegistrationRequestDto requestDto)
-            throws MessagingException, UnsupportedEncodingException {
+    public RegistrationResponseDto register(RegistrationRequestDto requestDto)  {
 
         if (profileRepository.existsByEmail(requestDto.email())) {
-            throw new RuntimeException("Email is already registered");
+            throw new EmailAlreadyRegisteredException("Email is already registered");
         }
 
         ProfileEntity profile = toEntity(requestDto);
@@ -104,16 +98,19 @@ public class ProfileService {
 
         profileRepository.save(profile);
 
-        emailService.sendWelcomeEmail(profile);
+        try {
+            emailService.sendWelcomeEmail(profile);
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            log.error("Welcome email failed for {}", profile.getEmail(), e);
+        }
 
         return toResponseDTO(profile);
     }
-    public String getRoleByEmail(String email) {
+    public Role getRoleByEmail(String email) {
         return profileRepository.findByEmail(email)
                 .map(ProfileEntity::getRole)
                 .orElseThrow(() -> new RuntimeException("Profile not found for email: " + email));
     }
-
     public Map<String, Object> authenticateAndGenerateToken(AuthDTO authDTO) {
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authDTO.getEmail(), authDTO.getPassword()));
@@ -121,8 +118,9 @@ public class ProfileService {
             String email = authDTO.getEmail();
             String token = jwtUtil.generateToken(email);
 
-            // Fetch the role for the response
-            String userRole = getRoleByEmail(email);
+            Role userRoleEnum = getRoleByEmail(email);
+            String userRole = userRoleEnum.name();
+
 
             return Map.of("token", token,
                     "user", getPublicProfile(email),
@@ -145,21 +143,7 @@ public class ProfileService {
                 .orElse(false);
 
     }
-    @Transactional
-    public ProfileEntity updateRole(String email, String newRole) {
 
-        if (!VALID_ROLES.contains(newRole)) {
-            throw new IllegalArgumentException("Invalid role specified: " + newRole +
-                    ". Must be one of: " + VALID_ROLES);
-        }
-
-        return profileRepository.findByEmail(email)
-                .map(profile -> {
-                    profile.setRole(newRole);
-                    return profileRepository.save(profile);
-                })
-                .orElseThrow(() -> new RuntimeException("Profile not found for email: " + email));
-    }
     public boolean isProfileActive(String email) {
         return profileRepository.findByEmail(email)
                 .map(ProfileEntity::getIsActive)
@@ -187,4 +171,23 @@ public class ProfileService {
                 .phone(currentUser.getPhone())
                 .build();
     }
+
+    @Transactional
+    public ProfileEntity updateRole(String email, String newRole) {
+        Role roleEnum;
+        try {
+            roleEnum = Role.valueOf(newRole.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid role: " + newRole);
+        }
+
+        return profileRepository.findByEmail(email)
+                .map(profile -> {
+                    profile.setRole(roleEnum);
+                    return profileRepository.save(profile);
+                })
+                .orElseThrow(() -> new RuntimeException("Profile not found for email: " + email));
+    }
+
+
 }

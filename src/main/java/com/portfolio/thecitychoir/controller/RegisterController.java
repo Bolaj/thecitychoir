@@ -2,6 +2,7 @@ package com.portfolio.thecitychoir.controller;
 
 import com.portfolio.thecitychoir.dto.AuthDTO;
 import com.portfolio.thecitychoir.dto.RegistrationRequestDto;
+import com.portfolio.thecitychoir.dto.RegistrationResponseDto;
 import com.portfolio.thecitychoir.service.ProfileService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -20,8 +21,11 @@ public class RegisterController {
     private final ProfileService profileService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequestDto dto) throws MessagingException, UnsupportedEncodingException {
-        return ResponseEntity.ok(profileService.register(dto));
+    public ResponseEntity<RegistrationResponseDto> register(
+            @Valid @RequestBody RegistrationRequestDto dto
+    ) {
+        RegistrationResponseDto response = profileService.register(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @GetMapping("/activate")
     public ResponseEntity<String> activateProfile(@RequestParam String token) {
@@ -44,4 +48,5 @@ public class RegisterController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Invalid email or password."));
         }
     }
+
 }

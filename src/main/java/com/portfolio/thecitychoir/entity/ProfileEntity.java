@@ -1,7 +1,7 @@
 package com.portfolio.thecitychoir.entity;
 
 
-import com.portfolio.thecitychoir.service.Role;
+import com.portfolio.thecitychoir.role.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

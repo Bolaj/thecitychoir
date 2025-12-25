@@ -1,6 +1,5 @@
 package com.portfolio.thecitychoir.util;
 
-
 import com.portfolio.thecitychoir.exceptions.InvalidJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,6 +22,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final JWTUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Exclude auth endpoints from JWT filtering
+     */
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.startsWith("/auth/");
+    }
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -30,20 +38,23 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
+        final String authHeader = request.getHeader("Authorization");
+
+        // No JWT present → continue request
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         try {
-            final String authHeader = request.getHeader("Authorization");
-
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                filterChain.doFilter(request, response);
-                return;
-            }
-
             String jwt = authHeader.substring(7);
             String email = jwtUtil.extractUsername(jwt);
 
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (email != null &&
+                    SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                var userDetails = userDetailsService.loadUserByUsername(email);
+                var userDetails =
+                        userDetailsService.loadUserByUsername(email);
 
                 if (jwtUtil.validateToken(jwt, userDetails)) {
                     var authToken = new UsernamePasswordAuthenticationToken(
@@ -51,19 +62,26 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                             null,
                             userDetails.getAuthorities()
                     );
+
                     authToken.setDetails(
-                            new WebAuthenticationDetailsSource().buildDetails(request)
+                            new WebAuthenticationDetailsSource()
+                                    .buildDetails(request)
                     );
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
+
+                    SecurityContextHolder.getContext()
+                            .setAuthentication(authToken);
                 }
             }
 
             filterChain.doFilter(request, response);
 
         } catch (InvalidJwtException ex) {
-            sendError(response, request, HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
-        } catch (Exception ex) {
-            sendError(response, request, HttpServletResponse.SC_UNAUTHORIZED, "Authentication failed");
+            sendError(
+                    response,
+                    request,
+                    HttpServletResponse.SC_UNAUTHORIZED,
+                    ex.getMessage()
+            );
         }
     }
 
@@ -95,4 +113,3 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         response.getWriter().write(body);
     }
 }
-

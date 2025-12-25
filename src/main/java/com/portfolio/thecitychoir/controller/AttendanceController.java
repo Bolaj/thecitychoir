@@ -5,6 +5,7 @@ import com.portfolio.thecitychoir.dto.AttendanceResponseDto;
 import com.portfolio.thecitychoir.dto.CreateRehearsalDto;
 import com.portfolio.thecitychoir.entity.ProfileEntity;
 import com.portfolio.thecitychoir.entity.RehearsalEntity;
+import com.portfolio.thecitychoir.role.Role;
 import com.portfolio.thecitychoir.service.AttendanceService;
 import com.portfolio.thecitychoir.service.ProfileService;
 import com.portfolio.thecitychoir.util.JWTUtil;
@@ -45,10 +46,9 @@ public class AttendanceController {
     @PreAuthorize("hasAuthority('Super Admin') or hasAuthority('Admin')")
     public ResponseEntity<ProfileEntity> updateProfileRole(
             @PathVariable String email,
-            @RequestParam String newRole) {
-
-        ProfileEntity updatedProfile = profileService.updateRole(email, newRole);
-
+            @RequestParam Role newRole  // make sure import is correct
+    ) {
+        ProfileEntity updatedProfile = profileService.updateRole(email, String.valueOf(newRole));
         return ResponseEntity.ok(updatedProfile);
     }
 
@@ -67,4 +67,6 @@ public class AttendanceController {
         String token = attendanceService.rotateQrToken(id, minutes);
         return ResponseEntity.ok(Map.of("qrToken", token, "expiresInMinutes", minutes));
     }
+
+
 }

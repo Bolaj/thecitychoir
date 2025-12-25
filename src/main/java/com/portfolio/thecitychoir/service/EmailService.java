@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -25,6 +26,7 @@ public class EmailService {
     @Value("${mail.from.name}")
     private String fromName;
 
+    @Async
     public void sendWelcomeEmail(ProfileEntity user) throws MessagingException, UnsupportedEncodingException {
 
         String activationUrl = "http://localhost:8081/api/auth/activate?token=" + user.getActivationToken();
@@ -32,7 +34,7 @@ public class EmailService {
         String html = """
             <html>
             <body style="font-family:Arial,sans-serif; color:#222;">
-                <h2>🎵 Welcome to The 500 City Choir, %s!</h2>
+                <h2> Welcome to The 500 City Choir, %s!</h2>
                 <p>Your registration number is <b>%s</b></p>
 
                 <p>Please <b>activate your account</b> by clicking the button below:</p>
@@ -45,7 +47,7 @@ public class EmailService {
                 </p>
 
                 <br/>
-                <p>We are glad to have you on board! 🎶</p>
+                <p>We are glad to have you on board! </p>
             </body>
             </html>
         """.formatted(user.getFullName(), user.getRegistrationNumber(), activationUrl);
@@ -55,7 +57,7 @@ public class EmailService {
 
         helper.setTo(user.getEmail());
         helper.setFrom(fromEmail, fromName);
-        helper.setSubject("🎵 Welcome to The City Choir 🎵");
+        helper.setSubject("Welcome to The City Choir");
         helper.setText(html, true); // true for HTML
 
         mailSender.send(message);

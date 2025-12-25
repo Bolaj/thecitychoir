@@ -1,4 +1,4 @@
-package com.portfolio.thecitychoir.service;
+package com.portfolio.thecitychoir.role;
 
 public enum Role {
     MEMBER,
