@@ -98,4 +98,29 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(status).body(error);
     }
+    @ExceptionHandler(RehearsalAlreadyExistsException.class)
+    public ResponseEntity<ApiErrorResponse> handleRehearsalAlreadyExists(
+            RehearsalAlreadyExistsException ex,
+            HttpServletRequest request
+    ) {
+        return buildError(ex.getMessage(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler(InvalidRehearsalTimeException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidRehearsalTime(
+            InvalidRehearsalTimeException ex,
+            HttpServletRequest request
+    ) {
+        // Using BAD_REQUEST (400) because this is a client input error
+        return buildError(ex.getMessage(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(NoActiveRehearsalException.class)
+    public ResponseEntity<ApiErrorResponse> handleNoActiveRehearsal(
+            NoActiveRehearsalException ex,
+            HttpServletRequest request
+    ) {
+        return buildError(ex.getMessage(), HttpStatus.NOT_FOUND, request);
+    }
+
 }
