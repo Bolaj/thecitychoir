@@ -7,6 +7,8 @@ import com.portfolio.thecitychoir.entity.AttendanceEntity;
 import com.portfolio.thecitychoir.entity.DeviceBindingEntity;
 import com.portfolio.thecitychoir.entity.ProfileEntity;
 import com.portfolio.thecitychoir.entity.RehearsalEntity;
+import com.portfolio.thecitychoir.exceptions.InvalidRehearsalTimeException;
+import com.portfolio.thecitychoir.exceptions.NoActiveRehearsalException;
 import com.portfolio.thecitychoir.exceptions.RehearsalAlreadyExistsException;
 import com.portfolio.thecitychoir.repository.AttendanceRepository;
 import com.portfolio.thecitychoir.repository.DeviceBindRepository;
@@ -44,7 +46,7 @@ public class AttendanceService {
         RehearsalEntity rehearsal = rehearsalRepository.findAll().stream()
                 .filter(r -> isWithinWindow(r.getStartTime(), r.getEndTime(), now))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("No active rehearsal right now"));
+                .orElseThrow(() -> new NoActiveRehearsalException("No active rehearsal right now"));
 
         if (attendanceRepository.existsByProfileAndRehearsal(user, rehearsal)) {
             return new AttendanceResponseDto(false, "Attendance already recorded for this rehearsal", user.getRegistrationNumber(), null);
@@ -97,6 +99,9 @@ public class AttendanceService {
     public RehearsalEntity createRehearsal(CreateRehearsalDto dto) {
 
         LocalDate date = dto.startTime().toLocalDate();
+        if (dto.startTime().isBefore(LocalDateTime.now()) || dto.endTime().isBefore(LocalDateTime.now())) {
+            throw new InvalidRehearsalTimeException("Start and end time cannot be in the past");
+        }
 
         if (rehearsalRepository.existsByRehearsalDate(date)) {
             throw new RehearsalAlreadyExistsException(
@@ -143,3 +148,5 @@ public class AttendanceService {
         return EARTH_RADIUS_METERS * c;
     }
 }
+
+

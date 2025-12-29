@@ -42,15 +42,15 @@ public class AttendanceController {
         return res.success() ? ResponseEntity.ok(res) : ResponseEntity.status(HttpStatus.FORBIDDEN).body(res);
     }
 
-    @PutMapping("/role/{email}")
-    @PreAuthorize("hasAuthority('Super Admin') or hasAuthority('Admin')")
-    public ResponseEntity<ProfileEntity> updateProfileRole(
-            @PathVariable String email,
-            @RequestParam Role newRole  // make sure import is correct
-    ) {
-        ProfileEntity updatedProfile = profileService.updateRole(email, String.valueOf(newRole));
-        return ResponseEntity.ok(updatedProfile);
-    }
+//    @PutMapping("/role/{email}")
+//    @PreAuthorize("hasAuthority('Super Admin') or hasAuthority('Admin')")
+//    public ResponseEntity<ProfileEntity> updateProfileRole(
+//            @PathVariable String email,
+//            @RequestParam Role newRole  // make sure import is correct
+//    ) {
+//        ProfileEntity updatedProfile = profileService.updateRole(email, String.valueOf(newRole));
+//        return ResponseEntity.ok(updatedProfile);
+//    }
 
     @PostMapping("/rehearsal")
     @PreAuthorize("hasRole('ADMIN')")
