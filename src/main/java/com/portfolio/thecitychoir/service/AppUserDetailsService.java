@@ -25,14 +25,14 @@ public class AppUserDetailsService implements UserDetailsService {
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(profileEntity.getEmail())
-                .password(profileEntity.getPassword()) // MUST be encoded
+                .password(profileEntity.getPassword())
                 .authorities(
                         List.of(new SimpleGrantedAuthority("ROLE_" + profileEntity.getRole().name()))
                 )
                 .accountExpired(false)
                 .accountLocked(false)
                 .credentialsExpired(false)
-                .disabled(!profileEntity.getIsActive()) // respect profile activation
+                .disabled(!profileEntity.getIsActive())
                 .build();
     }
 
