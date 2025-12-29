@@ -1,6 +1,7 @@
 package com.portfolio.thecitychoir.service;
 
 import com.portfolio.thecitychoir.dto.AuthDTO;
+import com.portfolio.thecitychoir.dto.PublicProfileDto;
 import com.portfolio.thecitychoir.dto.RegistrationRequestDto;
 import com.portfolio.thecitychoir.dto.RegistrationResponseDto;
 import com.portfolio.thecitychoir.entity.ProfileEntity;
@@ -8,7 +9,6 @@ import com.portfolio.thecitychoir.exceptions.EmailAlreadyRegisteredException;
 import com.portfolio.thecitychoir.repository.ProfileRepository;
 import com.portfolio.thecitychoir.role.Role;
 import com.portfolio.thecitychoir.util.JWTUtil;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,10 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor@Slf4j
@@ -32,19 +33,19 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final JWTUtil jwtUtil;
+   private final AuthenticationManager authenticationManager;
+   private final JWTUtil jwtUtil;
 
 
-
-    private RegistrationRequestDto toDTO(ProfileEntity profileEntity) {
-        return new RegistrationRequestDto(
-                profileEntity.getFullName(),
-                profileEntity.getGender(),
-                profileEntity.getEmail(),
-                profileEntity.getPart(),
-                profileEntity.getPhone(),
-                null // Do not expose password
+    private PublicProfileDto toPublicProfile(ProfileEntity entity) {
+        return new PublicProfileDto(
+                entity.getFullName(),
+                entity.getEmail(),
+                entity.getGender(),
+                entity.getPart(),
+                entity.getPhone(),
+                entity.getRole(),
+                entity.getRegistrationNumber()
         );
     }
 
@@ -82,29 +83,39 @@ public class ProfileService {
     }
 
     @Transactional
-    public RegistrationResponseDto register(RegistrationRequestDto requestDto)  {
+    public RegistrationResponseDto register(RegistrationRequestDto dto) {
 
-        if (profileRepository.existsByEmail(requestDto.email())) {
-            throw new EmailAlreadyRegisteredException("Email is already registered");
+        if (profileRepository.existsByEmail(dto.email())) {
+            throw new EmailAlreadyRegisteredException("Email already registered");
         }
 
-        ProfileEntity profile = toEntity(requestDto);
+        ProfileEntity profile = ProfileEntity.builder()
+                .fullName(dto.fullName())
+                .email(dto.email())
+                .gender(dto.gender())
+                .phone(dto.phone())
+                .part(dto.part())
+                .password(passwordEncoder.encode(dto.password()))
+                .isActive(false)
+                .activationToken(UUID.randomUUID().toString())
+                .role(Role.MEMBER)
+                .build();
 
-        String regNumber = generateRegistrationNumber(profile.getPart());
-        profile.setRegistrationNumber(regNumber);
-
-        profile.setActivationToken(UUID.randomUUID().toString());
-        profile.setIsActive(false);
-
+        profile.setRegistrationNumber(generateRegistrationNumber(profile.getPart()));
         profileRepository.save(profile);
 
         try {
             emailService.sendWelcomeEmail(profile);
-        } catch (MessagingException | UnsupportedEncodingException e) {
-            log.error("Welcome email failed for {}", profile.getEmail(), e);
+        } catch (Exception e) {
+            log.warn("Email failed for {} (ignored)", profile.getEmail());
         }
 
-        return toResponseDTO(profile);
+        return new RegistrationResponseDto(
+                profile.getFullName(),
+                profile.getEmail(),
+                profile.getPart(),
+                profile.getRegistrationNumber()
+        );
     }
     public Role getRoleByEmail(String email) {
         return profileRepository.findByEmail(email)
@@ -120,7 +131,6 @@ public class ProfileService {
 
             Role userRoleEnum = getRoleByEmail(email);
             String userRole = userRoleEnum.name();
-
 
             return Map.of("token", token,
                     "user", getPublicProfile(email),
@@ -174,6 +184,7 @@ public class ProfileService {
 
     @Transactional
     public ProfileEntity updateRole(String email, String newRole) {
+
         Role roleEnum;
         try {
             roleEnum = Role.valueOf(newRole.toUpperCase());
@@ -181,12 +192,46 @@ public class ProfileService {
             throw new IllegalArgumentException("Invalid role: " + newRole);
         }
 
+        if (roleEnum == Role.SUPER_ADMIN) {
+            throw new IllegalArgumentException("SUPER_ADMIN role cannot be assigned via API");
+        }
+
         return profileRepository.findByEmail(email)
                 .map(profile -> {
+
+                    if (profile.getRole() == Role.SUPER_ADMIN) {
+                        throw new IllegalStateException("Cannot modify SUPER_ADMIN role");
+                    }
+
                     profile.setRole(roleEnum);
                     return profileRepository.save(profile);
+
                 })
-                .orElseThrow(() -> new RuntimeException("Profile not found for email: " + email));
+                .orElseThrow(() ->
+                        new RuntimeException("Profile not found for email: " + email)
+                );
+    }
+
+    public void login(AuthDTO dto) {
+
+        ProfileEntity profile = profileRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        if (!profile.getIsActive()) {
+            throw new RuntimeException("Account not activated");
+        }
+
+        if (!passwordEncoder.matches(dto.getPassword(), profile.getPassword())) {
+            throw new RuntimeException("Invalid email or password");
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<PublicProfileDto> getAllUsers() {
+        return profileRepository.findAll()
+                .stream()
+                .map(this::toPublicProfile)
+                .collect(Collectors.toList());
     }
 
 
