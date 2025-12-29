@@ -34,27 +34,39 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors(Customizer.withDefaults())
+                // Disable things that break API testing
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+
+                // No sessions (REST API)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+
+                // AUTH RULES
                 .authorizeHttpRequests(auth -> auth
+                        // Always allow OPTIONS (Postman / Browser)
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // Public endpoints
                         .requestMatchers(
-                                "/status",
-                                "/health",
-                                "/auth/register",
-                                "/auth/login",
-                                "/auth/activate",
-                                "/auth/attendance/mark"
+                                "/api/status",
+                                "/api/health",
+
+                                "/api/auth/register",
+                                "/api/auth/login",
+                                "/api/auth/activate",
+
+                                // optional: attendance public mark
+                                "/api/auth/attendance/mark"
                         ).permitAll()
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(
-                        jwtRequestFilter,
-                        UsernamePasswordAuthenticationFilter.class
+
+                        // Everything else open for now
+                        .anyRequest().permitAll()
                 );
+
+        // ❌ IMPORTANT: DO NOT ADD JWT FILTER YET
+        // .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
