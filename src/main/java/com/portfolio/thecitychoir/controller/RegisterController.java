@@ -1,17 +1,18 @@
 package com.portfolio.thecitychoir.controller;
 
 import com.portfolio.thecitychoir.dto.AuthDTO;
+import com.portfolio.thecitychoir.dto.PublicProfileDto;
 import com.portfolio.thecitychoir.dto.RegistrationRequestDto;
 import com.portfolio.thecitychoir.dto.RegistrationResponseDto;
 import com.portfolio.thecitychoir.service.ProfileService;
-import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,6 +36,23 @@ public class RegisterController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Activation token not found or already used.");
         }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/users")
+    public ResponseEntity<List<PublicProfileDto>> getAllUsers() {
+        List<PublicProfileDto> users = profileService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PutMapping("/users/{email}/role")
+    public ResponseEntity<?> updateUserRole(
+            @PathVariable String email,
+            @RequestParam String role
+    ) {
+        profileService.updateRole(email, role);
+        return ResponseEntity.ok(Map.of("message", "Role updated"));
     }
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody AuthDTO authDTO) {
