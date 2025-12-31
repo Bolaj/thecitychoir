@@ -1,8 +1,6 @@
 package com.portfolio.thecitychoir.service;
 
-import com.portfolio.thecitychoir.dto.AttendanceRequestDto;
-import com.portfolio.thecitychoir.dto.AttendanceResponseDto;
-import com.portfolio.thecitychoir.dto.CreateRehearsalDto;
+import com.portfolio.thecitychoir.dto.*;
 import com.portfolio.thecitychoir.entity.AttendanceEntity;
 import com.portfolio.thecitychoir.entity.DeviceBindingEntity;
 import com.portfolio.thecitychoir.entity.ProfileEntity;
@@ -10,6 +8,7 @@ import com.portfolio.thecitychoir.entity.RehearsalEntity;
 import com.portfolio.thecitychoir.exceptions.InvalidRehearsalTimeException;
 import com.portfolio.thecitychoir.exceptions.NoActiveRehearsalException;
 import com.portfolio.thecitychoir.exceptions.RehearsalAlreadyExistsException;
+import com.portfolio.thecitychoir.exceptions.RehearsalNotFoundException;
 import com.portfolio.thecitychoir.repository.AttendanceRepository;
 import com.portfolio.thecitychoir.repository.DeviceBindRepository;
 import com.portfolio.thecitychoir.repository.ProfileRepository;
@@ -20,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -119,6 +119,54 @@ public class AttendanceService {
                         .endTime(dto.endTime())
                         .rehearsalDate(date)
                         .build()
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public AttendanceListResponseDto getAttendanceForRehearsal(Long rehearsalId) {
+        RehearsalEntity rehearsal = rehearsalRepository.findById(rehearsalId).orElseThrow(() -> new RehearsalNotFoundException("Rehearsal with id " + rehearsalId + " not found"));
+        List<AttendanceEntity> attendanceList = attendanceRepository.findByRehearsal(rehearsal);
+
+        List<AttendanceListItemDto> attendees = attendanceList.stream()
+                .map(a -> new AttendanceListItemDto(
+                        a.getProfile().getFullName(),
+                        a.getProfile().getRegistrationNumber(),
+                        a.getProfile().getPart(),
+                        a.getCheckedAt(),
+                        a.getDeviceId()
+                )).toList();
+        return new AttendanceListResponseDto(
+                rehearsal.getId(),
+                rehearsal.getRehearsalDate(),
+                attendees.size(),
+                attendees
+        );
+
+    }
+    @Transactional(readOnly = true)
+    public AttendanceSummaryResponseDto getAttendanceSummary(Long rehearsalId) {
+
+        RehearsalEntity rehearsal = rehearsalRepository.findById(rehearsalId)
+                .orElseThrow(() -> new RehearsalNotFoundException("Rehearsal not found"));
+
+        List<AttendancePartCountDto> breakdown =
+                attendanceRepository.countByPart(rehearsalId)
+                        .stream()
+                        .map(p -> new AttendancePartCountDto(
+                                p.getPart(),
+                                p.getCnt()
+                        ))
+                        .toList();
+
+        long totalPresent = breakdown.stream()
+                .mapToLong(AttendancePartCountDto::count)
+                .sum();
+
+        return new AttendanceSummaryResponseDto(
+                rehearsal.getId(),
+                rehearsal.getRehearsalDate(),
+                totalPresent,
+                breakdown
         );
     }
 

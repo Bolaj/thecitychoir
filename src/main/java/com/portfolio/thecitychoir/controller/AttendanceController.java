@@ -1,8 +1,6 @@
 package com.portfolio.thecitychoir.controller;
 
-import com.portfolio.thecitychoir.dto.AttendanceRequestDto;
-import com.portfolio.thecitychoir.dto.AttendanceResponseDto;
-import com.portfolio.thecitychoir.dto.CreateRehearsalDto;
+import com.portfolio.thecitychoir.dto.*;
 import com.portfolio.thecitychoir.entity.ProfileEntity;
 import com.portfolio.thecitychoir.entity.RehearsalEntity;
 import com.portfolio.thecitychoir.role.Role;
@@ -59,6 +57,28 @@ public class AttendanceController {
     ) {
         return ResponseEntity.ok(attendanceService.createRehearsal(dto));
     }
+    @GetMapping("/rehearsals/{rehearsalId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<AttendanceListResponseDto> getAttendance(
+            @PathVariable Long rehearsalId
+    ) {
+        return ResponseEntity.ok(
+                attendanceService.getAttendanceForRehearsal(rehearsalId)
+        );
+    }
+    @GetMapping("/rehearsals/{rehearsalId}/summary")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<AttendanceSummaryResponseDto> getSummary(
+            @PathVariable Long rehearsalId
+    ) {
+//        return ResponseEntity.ok(
+//                attendanceService.getAttendanceSummary(rehearsalId)
+//        );
+        AttendanceSummaryResponseDto summary = attendanceService.getAttendanceSummary(rehearsalId);
+        return ResponseEntity.ok(summary);
+    }
+
+
 
     // Admin: rotate QR (returns token; frontend can render as QR image)
     @PostMapping("/rehearsal/{id}/rotate-qr")
