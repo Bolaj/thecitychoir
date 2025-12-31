@@ -122,5 +122,13 @@ public class GlobalExceptionHandler {
     ) {
         return buildError(ex.getMessage(), HttpStatus.NOT_FOUND, request);
     }
+    @ExceptionHandler(RehearsalNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleRehearsalNotFound(
+            RehearsalNotFoundException ex,
+            HttpServletRequest request
+    ) {
+        return buildError(ex.getMessage(), HttpStatus.NOT_FOUND, request);
+    }
+
 
 }
