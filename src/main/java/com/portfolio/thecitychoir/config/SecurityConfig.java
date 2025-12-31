@@ -48,6 +48,11 @@ public class SecurityConfig {
                         // Always allow OPTIONS (Postman / Browser)
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**"
+                        ).permitAll()
                         // Public endpoints
                         .requestMatchers(
                                 "/api/status",
@@ -60,6 +65,7 @@ public class SecurityConfig {
                                 // optional: attendance public mark
                                 "/api/auth/attendance/mark"
                         ).permitAll()
+
 
                         // Everything else open for now
                         .anyRequest().permitAll()
