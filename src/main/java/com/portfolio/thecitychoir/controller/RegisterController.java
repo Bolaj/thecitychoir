@@ -7,6 +7,7 @@ import com.portfolio.thecitychoir.dto.RegistrationResponseDto;
 import com.portfolio.thecitychoir.service.ProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -56,6 +58,7 @@ public class RegisterController {
     }
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody AuthDTO authDTO) {
+        log.info("REST request to login user: {}", authDTO.getEmail());
         try{
             if(!profileService.isProfileActive(authDTO.getEmail())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body( Map.of("message", "Profile is not active. Please activate your account."));
