@@ -71,9 +71,7 @@ public class AttendanceController {
     public ResponseEntity<AttendanceSummaryResponseDto> getSummary(
             @PathVariable Long rehearsalId
     ) {
-//        return ResponseEntity.ok(
-//                attendanceService.getAttendanceSummary(rehearsalId)
-//        );
+//
         AttendanceSummaryResponseDto summary = attendanceService.getAttendanceSummary(rehearsalId);
         return ResponseEntity.ok(summary);
     }
