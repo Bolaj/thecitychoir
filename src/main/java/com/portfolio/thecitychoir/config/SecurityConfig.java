@@ -47,7 +47,6 @@ public class SecurityConfig {
 
                 // AUTH RULES
                 .authorizeHttpRequests(auth -> auth
-                        // Always allow OPTIONS (Postman / Browser)
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         .requestMatchers(
@@ -64,6 +63,9 @@ public class SecurityConfig {
                                 "/auth/activate"
 
                         ).permitAll()
+                        // Role-based
+                        .requestMatchers("/auth/permission/request").hasRole("MEMBER")
+                        .requestMatchers("/auth/permission/decide/**").hasAnyRole("DIRECTOR", "ADMIN")
                         .requestMatchers("/auth/attendance/mark").authenticated()
 
                         .anyRequest().authenticated()
