@@ -2,6 +2,7 @@ package com.portfolio.thecitychoir.service;
 
 
 import com.portfolio.thecitychoir.entity.ProfileEntity;
+import com.portfolio.thecitychoir.entity.RehearsalEntity;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class EmailService {
 
     @Value("${mail.from.name}")
     private String fromName;
+
 
     @Async
     public void sendWelcomeEmail(ProfileEntity user) throws MessagingException, UnsupportedEncodingException {
@@ -58,7 +60,46 @@ public class EmailService {
         helper.setTo(user.getEmail());
         helper.setFrom(fromEmail, fromName);
         helper.setSubject("Welcome to The City Choir");
-        helper.setText(html, true); // true for HTML
+        helper.setText(html, true);
+
+        mailSender.send(message);
+    }
+    @Async
+    public void sendRehearsalNotification(String recipientEmail, String fullName, RehearsalEntity rehearsal)
+            throws MessagingException, UnsupportedEncodingException {
+
+        String html = """
+        <html>
+        <body style="font-family:Arial,sans-serif; color:#222;">
+            <h2>New Rehearsal Scheduled! 🎵</h2>
+            <p>Hi %s,</p>
+            <p>A new rehearsal has been scheduled: <b>%s</b></p>
+            
+            <div style="background:#f4f4f4; padding:15px; border-radius:8px;">
+                <p>📅 <b>Date:</b> %s</p>
+                <p>⏰ <b>Time:</b> %s - %s</p>
+            </div>
+
+            <p>Please ensure you are present and on time. Check the app for location details!</p>
+            <br/>
+            <p>Best regards,<br/>The City Choir Management</p>
+        </body>
+        </html>
+    """.formatted(
+                fullName,
+                rehearsal.getName(),
+                rehearsal.getRehearsalDate(),
+                rehearsal.getStartTime().toLocalTime(),
+                rehearsal.getEndTime().toLocalTime()
+        );
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(recipientEmail);
+        helper.setFrom(fromEmail, fromName);
+        helper.setSubject("New Rehearsal: " + rehearsal.getName());
+        helper.setText(html, true);
 
         mailSender.send(message);
     }
