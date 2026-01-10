@@ -11,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "tbl_profiles")
@@ -58,6 +59,11 @@ public class ProfileEntity {
         if (this.role == null) {
             this.role = Role.MEMBER;
         }
+    }
+    public boolean hasAnyRole(Role... roles) {
+        if (role == null) return false;
+        return Arrays.stream(roles)
+                .anyMatch(r -> r == role);
     }
 
 }

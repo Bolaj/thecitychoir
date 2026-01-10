@@ -107,7 +107,7 @@ public class ProfileService {
         try {
             emailService.sendWelcomeEmail(profile);
         } catch (Exception e) {
-            log.warn("Email failed for {} (ignored)", profile.getEmail());
+            log.warn("Email failed for {} (ignored)", profile.getEmail(),e.getMessage(), e);
         }
 
         return new RegistrationResponseDto(
@@ -234,5 +234,12 @@ public class ProfileService {
                 .collect(Collectors.toList());
     }
 
+    public boolean existsByEmail(String email) {
+        return profileRepository.existsByEmail(email);
+    }
 
+    public ProfileEntity getProfileByEmail(String email) {
+        return profileRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Profile not found for email: " + email));
+    }
 }

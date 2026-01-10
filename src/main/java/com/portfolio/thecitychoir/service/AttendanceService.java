@@ -14,6 +14,7 @@ import com.portfolio.thecitychoir.repository.DeviceBindRepository;
 import com.portfolio.thecitychoir.repository.ProfileRepository;
 import com.portfolio.thecitychoir.repository.RehearsalRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AttendanceService {
 
@@ -30,8 +32,10 @@ public class AttendanceService {
     private final RehearsalRepository rehearsalRepository;
     private final DeviceBindRepository deviceBindingRepository;
     private final ProfileRepository profileRepository;
+    private final EmailService emailService;
 
     private static final double EARTH_RADIUS_METERS = 6_371_000d;
+
 
     @Transactional
     public AttendanceResponseDto markAttendance(String authEmail, AttendanceRequestDto req) {
@@ -99,27 +103,49 @@ public class AttendanceService {
     public RehearsalEntity createRehearsal(CreateRehearsalDto dto) {
 
         LocalDate date = dto.startTime().toLocalDate();
+
         if (dto.startTime().isBefore(LocalDateTime.now()) || dto.endTime().isBefore(LocalDateTime.now())) {
             throw new InvalidRehearsalTimeException("Start and end time cannot be in the past");
         }
 
         if (rehearsalRepository.existsByRehearsalDate(date)) {
-            throw new RehearsalAlreadyExistsException(
-                    "A rehearsal already exists for " + date
-            );
+            throw new RehearsalAlreadyExistsException("A rehearsal already exists for " + date);
         }
 
-        return rehearsalRepository.save(
-                RehearsalEntity.builder()
-                        .name(dto.name())
-                        .lat(dto.lat())
-                        .lng(dto.lng())
-                        .radiusMeters(dto.radiusMeters())
-                        .startTime(dto.startTime())
-                        .endTime(dto.endTime())
-                        .rehearsalDate(date)
-                        .build()
-        );
+        RehearsalEntity rehearsal = RehearsalEntity.builder()
+                .name(dto.name())
+                .lat(dto.lat())
+                .lng(dto.lng())
+                .radiusMeters(dto.radiusMeters())
+                .startTime(dto.startTime())
+                .endTime(dto.endTime())
+                .rehearsalDate(date)
+                .build();
+
+        RehearsalEntity savedRehearsal = rehearsalRepository.save(rehearsal);
+
+        // 3. Notify all active members
+        notifyMembers(savedRehearsal);
+
+        return savedRehearsal;
+    }
+
+    private void notifyMembers(RehearsalEntity rehearsal) {
+        List<ProfileRepository.MemberEmailProjection> members = profileRepository.findAllByIsActiveTrue();
+
+        log.info("Queueing rehearsal notification emails for {} members", members.size());
+
+        for (ProfileRepository.MemberEmailProjection member : members) {
+            try {
+                emailService.sendRehearsalNotification(
+                        member.getEmail(),
+                        member.getFullName(),
+                        rehearsal
+                );
+            } catch (Exception e) {
+                log.error("Failed to trigger email for member {}: {}", member.getEmail(), e.getMessage());
+            }
+        }
     }
 
     @Transactional(readOnly = true)

@@ -2,10 +2,14 @@ package com.portfolio.thecitychoir.service;
 
 
 import com.portfolio.thecitychoir.entity.ProfileEntity;
+import com.portfolio.thecitychoir.entity.RehearsalEntity;
+import com.portfolio.thecitychoir.entity.RequestPermissionEntity;
+import com.portfolio.thecitychoir.permission.PermissionStatus;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -25,6 +29,7 @@ public class EmailService {
 
     @Value("${mail.from.name}")
     private String fromName;
+
 
     @Async
     public void sendWelcomeEmail(ProfileEntity user) throws MessagingException, UnsupportedEncodingException {
@@ -58,8 +63,89 @@ public class EmailService {
         helper.setTo(user.getEmail());
         helper.setFrom(fromEmail, fromName);
         helper.setSubject("Welcome to The City Choir");
-        helper.setText(html, true); // true for HTML
+        helper.setText(html, true);
 
         mailSender.send(message);
+    }
+    @Async
+    public void sendRehearsalNotification(String recipientEmail, String fullName, RehearsalEntity rehearsal)
+            throws MessagingException, UnsupportedEncodingException {
+
+        String html = """
+        <html>
+        <body style="font-family:Arial,sans-serif; color:#222;">
+            <h2>New Rehearsal Scheduled! 🎵</h2>
+            <p>Hi %s,</p>
+            <p>A new rehearsal has been scheduled: <b>%s</b></p>
+            
+            <div style="background:#f4f4f4; padding:15px; border-radius:8px;">
+                <p>📅 <b>Date:</b> %s</p>
+                <p>⏰ <b>Time:</b> %s - %s</p>
+            </div>
+
+            <p>Please ensure you are present and on time. Check the app for location details!</p>
+            <br/>
+            <p>Best regards,<br/>The City Choir Management</p>
+        </body>
+        </html>
+    """.formatted(
+                fullName,
+                rehearsal.getName(),
+                rehearsal.getRehearsalDate(),
+                rehearsal.getStartTime().toLocalTime(),
+                rehearsal.getEndTime().toLocalTime()
+        );
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(recipientEmail);
+        helper.setFrom(fromEmail, fromName);
+        helper.setSubject("New Rehearsal: " + rehearsal.getName());
+        helper.setText(html, true);
+
+        mailSender.send(message);
+    }
+    @Async
+    public void sendPermissionRequestNotification(String toEmail, String memberName, RequestPermissionEntity permission) {
+        String subject = "New Permission Request from " + memberName;
+        StringBuilder sb = new StringBuilder();
+        sb.append("A new permission request has been submitted.\n\n");
+        sb.append("Member: ").append(memberName).append("\n");
+        sb.append("Registration: ").append(permission.getRegistrationNumber()).append("\n");
+        sb.append("Absence Date: ").append(permission.getAbsenceDate()).append("\n");
+        sb.append("Reason: ").append(permission.getReason()).append("\n");
+        sb.append("Submitted At: ").append(permission.getCreatedAt()).append("\n\n");
+        sb.append("Please review the request in the admin panel.");
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(toEmail);
+        msg.setSubject(subject);
+        msg.setText(sb.toString());
+
+        mailSender.send(msg);
+    }
+    @Async
+    public void sendPermissionDecisionNotification(String toEmail, PermissionStatus decision, RequestPermissionEntity permission) {
+        String statusText = decision == PermissionStatus.APPROVED ? "approved" : "declined";
+        String subject = "Your Permission Request has been " + (decision == PermissionStatus.APPROVED ? "Approved" : "Declined");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello ").append(permission.getProfile().getFullName()).append(",\n\n");
+        sb.append("Your permission request for ").append(permission.getAbsenceDate()).append(" has been ").append(statusText).append(".\n\n");
+        sb.append("Details:\n");
+        sb.append("Registration: ").append(permission.getRegistrationNumber()).append("\n");
+        sb.append("Reason: ").append(permission.getReason()).append("\n");
+        if (permission.getDecidedBy() != null) {
+            sb.append("Decided by: ").append(permission.getDecidedBy().getFullName()).append("\n");
+        }
+        sb.append("Decided At: ").append(permission.getDecidedAt()).append("\n\n");
+        sb.append("Regards,\nThe Team");
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(toEmail);
+        msg.setSubject(subject);
+        msg.setText(sb.toString());
+
+        mailSender.send(msg);
     }
 }

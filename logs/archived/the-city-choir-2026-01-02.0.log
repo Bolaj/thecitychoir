@@ -1,24 +1,24 @@
-2026-01-10 22:34:26 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
-2026-01-10 22:34:26 [main] INFO  c.p.t.ThecitychoirApplication - Starting ThecitychoirApplication using Java 24.0.1 with PID 9611 (/Users/timi/Desktop/projects/thecitychoir/target/classes started by timi in /Users/timi/Desktop/projects/thecitychoir)
-2026-01-10 22:34:26 [main] INFO  c.p.t.ThecitychoirApplication - The following 1 profile is active: "dev"
-2026-01-10 22:34:27 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-10 22:34:27 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 5 JPA repository interfaces.
-2026-01-10 22:34:27 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (http)
-2026-01-10 22:34:27 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
-2026-01-10 22:34:27 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-01-10 22:34:27 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.49]
-2026-01-10 22:34:27 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
-2026-01-10 22:34:27 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 732 ms
-2026-01-10 22:34:27 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-01-10 22:34:27 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.36.Final
-2026-01-10 22:34:27 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-01-10 22:34:27 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-10 22:34:27 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-01-10 22:34:28 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5c5c784c
-2026-01-10 22:34:28 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-01-10 22:34:28 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-01-10 22:34:28 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2026-01-10 22:34:28 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2026-01-01 19:46:40 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2026-01-01 19:46:40 [main] INFO  c.p.t.ThecitychoirApplication - Starting ThecitychoirApplication using Java 24.0.1 with PID 18247 (/Users/timi/Desktop/projects/thecitychoir/target/classes started by timi in /Users/timi/Desktop/projects/thecitychoir)
+2026-01-01 19:46:40 [main] INFO  c.p.t.ThecitychoirApplication - The following 1 profile is active: "dev"
+2026-01-01 19:46:41 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-01 19:46:41 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 4 JPA repository interfaces.
+2026-01-01 19:46:41 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (http)
+2026-01-01 19:46:41 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2026-01-01 19:46:41 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-01 19:46:41 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.49]
+2026-01-01 19:46:41 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-01-01 19:46:41 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 704 ms
+2026-01-01 19:46:41 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-01 19:46:41 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.36.Final
+2026-01-01 19:46:41 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-01-01 19:46:41 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-01 19:46:41 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-01 19:46:42 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5bba9949
+2026-01-01 19:46:42 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-01 19:46:42 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-01 19:46:42 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2026-01-01 19:46:42 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0
@@ -26,59 +26,46 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-01-10 22:34:28 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-01-10 22:34:28 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-01-10 22:34:28 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-01-10 22:34:29 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-01-10 22:34:29 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
-2026-01-10 22:34:29 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
-2026-01-10 22:34:29 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8081 (http) with context path '/api'
-2026-01-10 22:34:29 [main] INFO  c.p.t.ThecitychoirApplication - Started ThecitychoirApplication in 3.116 seconds (process running for 3.495)
-2026-01-10 22:43:38 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-01-10 22:43:38 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-01-10 22:43:38 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
-2026-01-10 22:43:38 [http-nio-8081-exec-1] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RegisterController.login() with argument[s] = [AuthDTO(email=shallo2@gmail.com, password=Timilehin@255, token=null)]
-2026-01-10 22:43:38 [http-nio-8081-exec-1] INFO  c.p.t.controller.RegisterController - REST request to login user: shallo2@gmail.com
-2026-01-10 22:43:38 [http-nio-8081-exec-1] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RegisterController.login() with result = <200 OK OK,{role=MEMBER, token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFsbG8yQGdtYWlsLmNvbSIsImlhdCI6MTc2ODA4MTQxOCwiZXhwIjoxNzY4MTY3ODE4fQ.yPC0szsbLBTIF9T1u3GiBVgJr3J2rDSuoNiPsbKDhdQ, user=RegistrationRequestDto[fullName=Shallom Timi, email=shallo2@gmail.com, password=null, gender=Female, part=ALT, phone=08023334454]},[]>. Execution time: 301ms
-2026-01-10 22:44:10 [http-nio-8081-exec-3] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RequestPermissionController.submitPermissionRequest() with argument[s] = [RequestPermissionRequestDto(reason=Family emergency, absenceDate=2026-01-11), UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=shallo2@gmail.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_MEMBER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_MEMBER]]]
-2026-01-10 22:44:10 [http-nio-8081-exec-3] INFO  c.p.t.s.RequestPermissionService - Permission request submitted by shallo2@gmail.com for 2026-01-11
-2026-01-10 22:44:10 [http-nio-8081-exec-3] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RequestPermissionController.submitPermissionRequest() with result = <200 OK OK,PermissionResponseDto(permissionId=2, status=PENDING, message=Permission request submitted successfully),[]>. Execution time: 87ms
-2026-01-10 22:49:28 [http-nio-8081-exec-5] ERROR c.p.t.util.JwtRequestFilter - JWT Authentication failed: Invalid JWT signature
-2026-01-10 22:49:38 [http-nio-8081-exec-7] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RegisterController.login() with argument[s] = [AuthDTO(email=shallo3@gmail.com, password=Timilehin@255, token=null)]
-2026-01-10 22:49:38 [http-nio-8081-exec-7] INFO  c.p.t.controller.RegisterController - REST request to login user: shallo3@gmail.com
-2026-01-10 22:49:38 [http-nio-8081-exec-7] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RegisterController.login() with result = <200 OK OK,{role=ADMIN, token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFsbG8zQGdtYWlsLmNvbSIsImlhdCI6MTc2ODA4MTc3OCwiZXhwIjoxNzY4MTY4MTc4fQ.a16QuQqMGAut_Uvhw_qKx4pTMTsCtWEwRPYlsJmr5VA, user=RegistrationRequestDto[fullName=Shallom Timi, email=shallo3@gmail.com, password=null, gender=Female, part=ALT, phone=08023334454]},[]>. Execution time: 142ms
-2026-01-10 22:49:50 [http-nio-8081-exec-8] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RequestPermissionController.listPermissions() with argument[s] = [UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=shallo3@gmail.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_ADMIN]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ADMIN]]]
-2026-01-10 22:49:50 [http-nio-8081-exec-8] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RequestPermissionController.listPermissions() with result = <200 OK OK,[PermissionListItemDto(permissionId=1, memberEmail=shallo2@gmail.com, absenceDate=2026-01-10, status=APPROVED, reason=Family emergency), PermissionListItemDto(permissionId=2, memberEmail=shallo2@gmail.com, absenceDate=2026-01-11, status=PENDING, reason=Family emergency)],[]>. Execution time: 31ms
-2026-01-10 22:50:24 [http-nio-8081-exec-9] ERROR c.p.t.util.JwtRequestFilter - JWT Authentication failed: Invalid JWT signature
-2026-01-10 22:50:47 [http-nio-8081-exec-10] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RequestPermissionController.decidePermission() with argument[s] = [2, DecidePermissionRequestDto(decision=APPROVED), UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=shallo3@gmail.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_ADMIN]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ADMIN]]]
-2026-01-10 22:50:47 [http-nio-8081-exec-10] INFO  c.p.t.s.RequestPermissionService - Permission APPROVED by shallo3@gmail.com for member shallo2@gmail.com
-2026-01-10 22:50:47 [http-nio-8081-exec-10] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RequestPermissionController.decidePermission() with result = <200 OK OK,PermissionResponseDto(permissionId=2, status=APPROVED, message=Permission approved),[]>. Execution time: 23ms
-2026-01-10 22:56:40 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-01-10 22:56:40 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-01-10 22:56:40 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-01-10 22:56:40 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-01-10 22:56:40 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-01-10 22:56:43 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
-2026-01-10 22:56:43 [main] INFO  c.p.t.ThecitychoirApplication - Starting ThecitychoirApplication using Java 24.0.1 with PID 10017 (/Users/timi/Desktop/projects/thecitychoir/target/classes started by timi in /Users/timi/Desktop/projects/thecitychoir)
-2026-01-10 22:56:43 [main] INFO  c.p.t.ThecitychoirApplication - The following 1 profile is active: "dev"
-2026-01-10 22:56:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-10 22:56:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 5 JPA repository interfaces.
-2026-01-10 22:56:44 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (http)
-2026-01-10 22:56:44 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
-2026-01-10 22:56:44 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-01-10 22:56:44 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.49]
-2026-01-10 22:56:44 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
-2026-01-10 22:56:44 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 754 ms
-2026-01-10 22:56:44 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-01-10 22:56:44 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.36.Final
-2026-01-10 22:56:44 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-01-10 22:56:44 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-10 22:56:44 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-01-10 22:56:44 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6ed7b9c5
-2026-01-10 22:56:44 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-01-10 22:56:44 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-01-10 22:56:44 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2026-01-10 22:56:44 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2026-01-01 19:46:42 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-01 19:46:42 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-01 19:46:42 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-01 19:46:43 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-01 19:46:43 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
+2026-01-01 19:46:43 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2026-01-01 19:46:43 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8081 (http) with context path '/api'
+2026-01-01 19:46:43 [main] INFO  c.p.t.ThecitychoirApplication - Started ThecitychoirApplication in 3.045 seconds (process running for 3.476)
+2026-01-01 19:48:08 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-01 19:48:08 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-01-01 19:48:08 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 7 ms
+2026-01-01 19:48:08 [http-nio-8081-exec-1] ERROR c.p.t.util.JwtRequestFilter - JWT Authentication failed: Invalid JWT signature
+2026-01-01 19:49:18 [http-nio-8081-exec-5] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RegisterController.login() with argument[s] = [AuthDTO(email=segun@gmail.com, password=Timilehin@255, token=null)]
+2026-01-01 19:49:18 [http-nio-8081-exec-5] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RegisterController.login() with result = <200 OK OK,{user=RegistrationRequestDto[fullName=Olusegun Akinloye, email=segun@gmail.com, password=null, gender=Male, part=TEN, phone=08023334454], role=MEMBER, token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZWd1bkBnbWFpbC5jb20iLCJpYXQiOjE3NjcyOTMzNTgsImV4cCI6MTc2NzM3OTc1OH0.q74JQDjIDccNj03721cTmKhofA9I6FiEOVuOJZzsR-M},[]>. Execution time: 259ms
+2026-01-01 19:54:33 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-01 19:54:33 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-01 19:54:33 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-01 19:54:33 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-01 19:54:33 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-01-01 19:54:34 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2026-01-01 19:54:34 [main] INFO  c.p.t.ThecitychoirApplication - Starting ThecitychoirApplication using Java 24.0.1 with PID 18369 (/Users/timi/Desktop/projects/thecitychoir/target/classes started by timi in /Users/timi/Desktop/projects/thecitychoir)
+2026-01-01 19:54:34 [main] INFO  c.p.t.ThecitychoirApplication - The following 1 profile is active: "dev"
+2026-01-01 19:54:35 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-01 19:54:35 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 4 JPA repository interfaces.
+2026-01-01 19:54:35 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (http)
+2026-01-01 19:54:35 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2026-01-01 19:54:35 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-01 19:54:35 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.49]
+2026-01-01 19:54:35 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-01-01 19:54:35 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 748 ms
+2026-01-01 19:54:35 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-01 19:54:35 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.36.Final
+2026-01-01 19:54:35 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-01-01 19:54:35 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-01 19:54:35 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-01 19:54:36 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3d2eb7fa
+2026-01-01 19:54:36 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-01 19:54:36 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-01 19:54:36 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2026-01-01 19:54:36 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0
@@ -86,37 +73,6 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-01-10 22:56:45 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-01-10 22:56:45 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-01-10 22:56:45 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-01-10 22:56:45 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-01-10 22:56:45 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
-2026-01-10 22:56:46 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
-2026-01-10 22:56:46 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8081 (http) with context path '/api'
-2026-01-10 22:56:46 [main] INFO  c.p.t.ThecitychoirApplication - Started ThecitychoirApplication in 3.191 seconds (process running for 3.677)
-2026-01-10 22:56:58 [http-nio-8081-exec-2] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-01-10 22:56:58 [http-nio-8081-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-01-10 22:56:58 [http-nio-8081-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
-2026-01-10 22:56:58 [http-nio-8081-exec-2] ERROR c.p.t.util.JwtRequestFilter - JWT Authentication failed: Invalid JWT signature
-2026-01-10 22:57:04 [http-nio-8081-exec-3] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RegisterController.login() with argument[s] = [AuthDTO(email=shallo3@gmail.com, password=Timilehin@255, token=null)]
-2026-01-10 22:57:04 [http-nio-8081-exec-3] INFO  c.p.t.controller.RegisterController - REST request to login user: shallo3@gmail.com
-2026-01-10 22:57:04 [http-nio-8081-exec-3] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RegisterController.login() with result = <200 OK OK,{token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFsbG8zQGdtYWlsLmNvbSIsImlhdCI6MTc2ODA4MjIyNCwiZXhwIjoxNzY4MTY4NjI0fQ.BLRE7_cyxhagdtPhhUd2YKpOTgVSpNRrm_swBq_aLSA, role=ADMIN, user=RegistrationRequestDto[fullName=Shallom Timi, email=shallo3@gmail.com, password=null, gender=Female, part=ALT, phone=08023334454]},[]>. Execution time: 260ms
-2026-01-10 22:57:19 [http-nio-8081-exec-4] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RequestPermissionController.decidePermission() with argument[s] = [2, DecidePermissionRequestDto(decision=APPROVED), UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=shallo3@gmail.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_ADMIN]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ADMIN]]]
-2026-01-10 22:57:19 [http-nio-8081-exec-4] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RequestPermissionController.decidePermission() with result = <200 OK OK,PermissionResponseDto(permissionId=2, status=APPROVED, message=Permission already approved),[]>. Execution time: 25ms
-2026-01-10 22:58:00 [http-nio-8081-exec-5] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RegisterController.login() with argument[s] = [AuthDTO(email=damiodunsi@gmail.com, password=Timilehin@255, token=null)]
-2026-01-10 22:58:00 [http-nio-8081-exec-5] INFO  c.p.t.controller.RegisterController - REST request to login user: damiodunsi@gmail.com
-2026-01-10 22:58:00 [http-nio-8081-exec-5] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RegisterController.login() with result = <200 OK OK,{token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW1pb2R1bnNpQGdtYWlsLmNvbSIsImlhdCI6MTc2ODA4MjI4MCwiZXhwIjoxNzY4MTY4NjgwfQ.PVgIza7KMSW2TVgM7xYPvpq7HqGKI8h8VVEMrcXBDgs, role=MEMBER, user=RegistrationRequestDto[fullName=Damilola Odunsi, email=damiodunsi@gmail.com, password=null, gender=Female, part=SOP, phone=08023334454]},[]>. Execution time: 144ms
-2026-01-10 22:58:19 [http-nio-8081-exec-6] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RequestPermissionController.submitPermissionRequest() with argument[s] = [RequestPermissionRequestDto(reason=Family emergency, absenceDate=2026-01-11), UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=damiodunsi@gmail.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_MEMBER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_MEMBER]]]
-2026-01-10 22:58:19 [http-nio-8081-exec-6] INFO  c.p.t.s.RequestPermissionService - Permission request submitted by damiodunsi@gmail.com for 2026-01-11
-2026-01-10 22:58:19 [http-nio-8081-exec-6] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RequestPermissionController.submitPermissionRequest() with result = <200 OK OK,PermissionResponseDto(permissionId=3, status=PENDING, message=Permission request submitted successfully),[]>. Execution time: 48ms
-2026-01-10 22:59:15 [http-nio-8081-exec-7] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RegisterController.login() with argument[s] = [AuthDTO(email=shallo3@gmail.com, password=Timilehin@255, token=null)]
-2026-01-10 22:59:15 [http-nio-8081-exec-7] INFO  c.p.t.controller.RegisterController - REST request to login user: shallo3@gmail.com
-2026-01-10 22:59:15 [http-nio-8081-exec-7] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RegisterController.login() with result = <200 OK OK,{token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFsbG8zQGdtYWlsLmNvbSIsImlhdCI6MTc2ODA4MjM1NSwiZXhwIjoxNzY4MTY4NzU1fQ.kbJmbIcZbAhtTNbLM5NtCcB8eLVgM-CeRlU1yqeTknw, role=ADMIN, user=RegistrationRequestDto[fullName=Shallom Timi, email=shallo3@gmail.com, password=null, gender=Female, part=ALT, phone=08023334454]},[]>. Execution time: 148ms
-2026-01-10 22:59:31 [http-nio-8081-exec-8] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RequestPermissionController.listPermissions() with argument[s] = [UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=shallo3@gmail.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_ADMIN]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ADMIN]]]
-2026-01-10 22:59:31 [http-nio-8081-exec-8] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RequestPermissionController.listPermissions() with result = <200 OK OK,[PermissionListItemDto(permissionId=1, memberEmail=shallo2@gmail.com, absenceDate=2026-01-10, status=APPROVED, reason=Family emergency), PermissionListItemDto(permissionId=2, memberEmail=shallo2@gmail.com, absenceDate=2026-01-11, status=APPROVED, reason=Family emergency), PermissionListItemDto(permissionId=3, memberEmail=damiodunsi@gmail.com, absenceDate=2026-01-11, status=PENDING, reason=Family emergency)],[]>. Execution time: 20ms
-2026-01-10 22:59:48 [http-nio-8081-exec-9] INFO  c.p.t.aspect.LoggingAspect - Enter: com.portfolio.thecitychoir.controller.RequestPermissionController.decidePermission() with argument[s] = [3, DecidePermissionRequestDto(decision=APPROVED), UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=shallo3@gmail.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_ADMIN]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ADMIN]]]
-2026-01-10 22:59:48 [http-nio-8081-exec-9] INFO  c.p.t.s.RequestPermissionService - Permission APPROVED by shallo3@gmail.com for member damiodunsi@gmail.com
-2026-01-10 22:59:48 [http-nio-8081-exec-9] INFO  c.p.t.aspect.LoggingAspect - Exit: com.portfolio.thecitychoir.controller.RequestPermissionController.decidePermission() with result = <200 OK OK,PermissionResponseDto(permissionId=3, status=APPROVED, message=Permission approved),[]>. Execution time: 28ms
 2026-01-01 19:54:36 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2026-01-01 19:54:36 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 2026-01-01 19:54:36 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -280,52 +236,3 @@
 2026-01-01 20:45:12 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-01-01 20:45:12 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2026-01-01 20:45:12 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-01-01 21:38:20 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
-2026-01-01 21:38:20 [main] INFO  c.p.t.ThecitychoirApplication - Starting ThecitychoirApplication using Java 24.0.1 with PID 21256 (/Users/timi/Desktop/projects/thecitychoir/target/classes started by timi in /Users/timi/Desktop/projects/thecitychoir)
-2026-01-01 21:38:20 [main] INFO  c.p.t.ThecitychoirApplication - The following 1 profile is active: "dev"
-2026-01-01 21:38:20 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-01 21:38:20 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 4 JPA repository interfaces.
-2026-01-01 21:38:20 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (http)
-2026-01-01 21:38:20 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
-2026-01-01 21:38:20 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-01-01 21:38:20 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.49]
-2026-01-01 21:38:20 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
-2026-01-01 21:38:20 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 750 ms
-2026-01-01 21:38:20 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-01-01 21:38:21 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.36.Final
-2026-01-01 21:38:21 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-01-01 21:38:21 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-01 21:38:21 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-01-01 21:38:21 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5c0ece6d
-2026-01-01 21:38:21 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-01-01 21:38:21 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-01-01 21:38:21 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2026-01-01 21:38:21 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 8.0
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-01-01 21:38:21 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-01-01 21:38:21 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-01-01 21:38:22 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-01-01 21:38:22 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-01-01 21:38:22 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
-2026-01-01 21:38:22 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
-2026-01-01 21:38:22 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8081 (http) with context path '/api'
-2026-01-01 21:38:22 [main] INFO  c.p.t.ThecitychoirApplication - Started ThecitychoirApplication in 2.97 seconds (process running for 3.336)
-2026-01-01 21:38:32 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-01-01 21:38:32 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-01-01 21:38:32 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
-2026-01-01 21:38:32 [http-nio-8081-exec-1] ERROR c.p.t.util.JwtRequestFilter - JWT Authentication failed: Invalid JWT signature
-2026-01-01 21:58:23 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m31s573ms).
-2026-01-01 22:14:23 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m30s456ms).
-2026-01-01 22:29:55 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m31s910ms).
-2026-01-01 22:35:01 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m5s601ms).
-2026-01-01 22:35:30 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-01-01 22:35:30 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-01-01 22:35:30 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-01-01 22:35:30 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-01-01 22:35:30 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
