@@ -4,6 +4,7 @@ package com.portfolio.thecitychoir.service;
 import com.portfolio.thecitychoir.entity.ProfileEntity;
 import com.portfolio.thecitychoir.entity.RehearsalEntity;
 import com.portfolio.thecitychoir.entity.RequestPermissionEntity;
+import com.portfolio.thecitychoir.permission.PermissionStatus;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -116,6 +117,29 @@ public class EmailService {
         sb.append("Reason: ").append(permission.getReason()).append("\n");
         sb.append("Submitted At: ").append(permission.getCreatedAt()).append("\n\n");
         sb.append("Please review the request in the admin panel.");
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(toEmail);
+        msg.setSubject(subject);
+        msg.setText(sb.toString());
+
+        mailSender.send(msg);
+    }
+    @Async
+    public void sendPermissionDecisionNotification(String toEmail, PermissionStatus decision, RequestPermissionEntity permission) {
+        String statusText = decision == PermissionStatus.APPROVED ? "approved" : "declined";
+        String subject = "Your Permission Request has been " + (decision == PermissionStatus.APPROVED ? "Approved" : "Declined");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello ").append(permission.getProfile().getFullName()).append(",\n\n");
+        sb.append("Your permission request for ").append(permission.getAbsenceDate()).append(" has been ").append(statusText).append(".\n\n");
+        sb.append("Details:\n");
+        sb.append("Registration: ").append(permission.getRegistrationNumber()).append("\n");
+        sb.append("Reason: ").append(permission.getReason()).append("\n");
+        if (permission.getDecidedBy() != null) {
+            sb.append("Decided by: ").append(permission.getDecidedBy().getFullName()).append("\n");
+        }
+        sb.append("Decided At: ").append(permission.getDecidedAt()).append("\n\n");
+        sb.append("Regards,\nThe Team");
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(toEmail);

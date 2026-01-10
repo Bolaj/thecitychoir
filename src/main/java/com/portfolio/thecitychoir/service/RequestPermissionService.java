@@ -105,6 +105,15 @@ public class RequestPermissionService {
                 approver.getEmail(),
                 permission.getProfile().getEmail()
         );
+        try {
+            emailService.sendPermissionDecisionNotification(
+                    permission.getProfile().getEmail(),
+                    decision,
+                    permission
+            );
+        } catch (Exception e) {
+            log.error("Failed to send permission decision email to {}: {}", permission.getProfile().getEmail(), e.getMessage());
+        }
 
         return decision == PermissionStatus.APPROVED
                 ? "Permission approved"
