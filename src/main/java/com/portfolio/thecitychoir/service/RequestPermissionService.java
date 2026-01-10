@@ -4,6 +4,7 @@ import com.portfolio.thecitychoir.dto.PermissionListItemDto;
 import com.portfolio.thecitychoir.entity.ProfileEntity;
 import com.portfolio.thecitychoir.entity.RequestPermissionEntity;
 import com.portfolio.thecitychoir.permission.PermissionStatus;
+import com.portfolio.thecitychoir.repository.ProfileRepository;
 import com.portfolio.thecitychoir.repository.RequestPermissionRepository;
 import com.portfolio.thecitychoir.role.Role;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ public class RequestPermissionService {
 
     private final RequestPermissionRepository permissionRepository;
     private final ProfileService profileService;
+    private final ProfileRepository profileRepository;
+    private final EmailService emailService;
 
     @Transactional
     public RequestPermissionEntity requestPermission(
@@ -47,6 +50,18 @@ public class RequestPermissionService {
 
         log.info("Permission request submitted by {} for {}",
                 member.getEmail(), absenceDate);
+
+        List<ProfileEntity> admins = profileRepository.findAll().stream()
+                .filter(p -> p.hasAnyRole(Role.ADMIN, Role.DIRECTOR, Role.SUPER_ADMIN))
+                .collect(Collectors.toList());
+
+        for (ProfileEntity admin : admins) {
+            try {
+                emailService.sendPermissionRequestNotification(admin.getEmail(), member.getFullName(), permission);
+            } catch (Exception e) {
+                log.error("Failed to send permission notification to {}: {}", admin.getEmail(), e.getMessage());
+            }
+        }
 
         return permission;
     }

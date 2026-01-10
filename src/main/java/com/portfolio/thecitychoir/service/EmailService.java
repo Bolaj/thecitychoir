@@ -3,10 +3,12 @@ package com.portfolio.thecitychoir.service;
 
 import com.portfolio.thecitychoir.entity.ProfileEntity;
 import com.portfolio.thecitychoir.entity.RehearsalEntity;
+import com.portfolio.thecitychoir.entity.RequestPermissionEntity;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -102,5 +104,24 @@ public class EmailService {
         helper.setText(html, true);
 
         mailSender.send(message);
+    }
+    @Async
+    public void sendPermissionRequestNotification(String toEmail, String memberName, RequestPermissionEntity permission) {
+        String subject = "New Permission Request from " + memberName;
+        StringBuilder sb = new StringBuilder();
+        sb.append("A new permission request has been submitted.\n\n");
+        sb.append("Member: ").append(memberName).append("\n");
+        sb.append("Registration: ").append(permission.getRegistrationNumber()).append("\n");
+        sb.append("Absence Date: ").append(permission.getAbsenceDate()).append("\n");
+        sb.append("Reason: ").append(permission.getReason()).append("\n");
+        sb.append("Submitted At: ").append(permission.getCreatedAt()).append("\n\n");
+        sb.append("Please review the request in the admin panel.");
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(toEmail);
+        msg.setSubject(subject);
+        msg.setText(sb.toString());
+
+        mailSender.send(msg);
     }
 }
